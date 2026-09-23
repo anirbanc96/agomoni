@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#211e1c">
+<meta name="description" content="A little piece of Bengal, wherever you are. Step into an illustrated Durga Puja evening or a quiet Mahalaya dawn, with music from YouTube.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Agomoni — Pujo, wherever you are</title>
+<script>
+// YouTube playback works with the local hostname rather than the numeric loopback address.
+if(location.hostname==='127.0.0.1'){const previewUrl=new URL(location.href);previewUrl.hostname='localhost';location.replace(previewUrl.href);}
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%238b3625'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='44' fill='%23fff0d6'%3Eআ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/pujo.webp"><link rel="stylesheet" href="styles.css?v=credits">
+</head>
+<body data-mode="pujo">
+<div class="world" aria-hidden="true"><div class="scene scene-pujo"></div><div class="scene scene-mahalaya"></div><div class="breathing-light"></div><div class="mist mist-one"></div><div class="mist mist-two"></div><canvas id="atmosphere"></canvas><div class="vignette"></div><div class="grain"></div></div>
+<main class="app">
+<header class="topbar">
+<div class="brand"><div class="brand-name"><span class="brand-bn" lang="bn">আগমনী</span><span class="brand-en">AGOMONI</span></div><p class="brand-tagline">Pujo, wherever you are.</p></div>
+<button id="mode-toggle" class="mode-toggle" aria-label="Switch to Mahalaya"><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17h18M5 21h14M7 13a5 5 0 0 1 10 0M12 2v3M3 7l2 2M21 7l-2 2"/></svg><span id="mode-label">Mahalaya</span><span class="toggle-arrow" aria-hidden="true">↗</span></button>
+</header>
+<section class="intro" aria-labelledby="scene-title">
+<h1 id="scene-title" lang="bn">পুজো এসে গেছে।</h1>
+<p class="intro-bn" id="intro-bn" lang="bn">চেনা সুরে, ঘরে ফেরার টান।</p>
+</section>
+<div class="bottom-area">
+<div class="scene-caption"><span class="caption-line"></span><span id="scene-caption">A PUJO EVENING</span><span class="caption-line"></span></div>
+<div id="player-wrap" class="player-wrap">
+<section id="playlist-panel" class="playlist-panel" aria-labelledby="playlist-heading" aria-hidden="true" inert>
+<div class="playlist-header"><div><h2 id="playlist-heading">Pujo playlist</h2><span id="playlist-count">Loading songs…</span></div><button id="playlist-close" class="playlist-close" type="button" aria-label="Close playlist" title="Close playlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+<ol id="playlist-songs" class="playlist-songs"></ol>
+<p id="playlist-empty" class="playlist-empty" hidden>Add a song to start your Pujo playlist.</p>
+<form id="playlist-add-form" class="playlist-add-form" novalidate>
+<label for="song-url">Your songs, your Pujo</label>
+<div class="playlist-input-row"><textarea id="song-url" name="youtube-url" rows="2" placeholder="Paste song links or a YouTube playlist link" autocomplete="off" spellcheck="false" aria-describedby="playlist-link-help playlist-local-note playlist-feedback"></textarea><div class="playlist-input-actions"><button id="add-song" type="submit" title="Save songs without interrupting the music" disabled>Add</button><button id="play-links" type="button" title="Play these links without saving them" disabled>Play</button></div></div>
+<p id="playlist-link-help">One link per line. For a whole playlist, use its playlist page link.</p>
+<p id="playlist-local-note">Add saves for your next visit in this browser. Play previews without saving.</p><p id="playlist-feedback" role="status" aria-live="polite"></p>
+</form>
+</section>
+<section class="music-player" aria-label="Music player">
+<div class="album-art" aria-hidden="true"><span></span></div>
+<div class="player-body">
+
+<div class="track-details"><h2 id="track-title">Dugga Elo</h2><p id="track-artist">Monali Thakur · Zee Music Bangla</p></div>
+<div class="transport">
+<button id="previous" class="icon-button" aria-label="Previous song" title="Previous song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M19 5l-10 7 10 7z"/></svg></button>
+<button id="play" class="play-button" aria-label="Play music" title="Play music"><svg id="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l10-7z"/></svg><svg id="pause-icon" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><span id="play-label" class="sr-only">Play</span></button>
+<button id="next" class="icon-button" aria-label="Next song" title="Next song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M5 5l10 7-10 7z"/></svg></button>
+<button id="shuffle" class="icon-button shuffle-toggle" type="button" aria-label="Shuffle" aria-pressed="false" title="Shuffle off · turn on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h2c5 0 9 12 14 12h2M17 14l4 4-4 4M3 18h2c2 0 4-2 6-5m3-4c2-2 3-3 5-3h2M17 2l4 4-4 4"/></svg></button>
+<button id="playlist-toggle" class="icon-button playlist-toggle" type="button" aria-label="Open playlist" aria-controls="playlist-panel" aria-expanded="false" title="Playlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h10M19 11v9m0-9 3 1"/><circle cx="17" cy="20" r="2"/></svg></button>
+
+</div>
+<div class="progress-row" id="progress-row"><time id="elapsed">0:00</time><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Song position" disabled><time id="duration">—:—</time></div>
+</div>
+</section>
+</div>
+<p id="player-status" class="player-status" role="status" aria-live="polite"></p>
+<footer><a id="youtube-link" href="https://www.youtube.com/watch?v=lPpuV4YnU4g" target="_blank" rel="noopener noreferrer">Listen on YouTube <span aria-hidden="true">↗</span></a></footer>
+</div>
+<aside class="site-credits" aria-label="Credits">
+<span>Created using ChatGPT</span>
+<span id="inspiration-credit">Inspired by <a href="https://bengaliexperience.wtf/mahalaya" target="_blank" rel="noopener noreferrer">Bengali Experience</a></span>
+</aside>
+</main>
+<div class="stream-host" aria-hidden="true"><div id="youtube-player"></div></div>
+<script src="playlist-data.js"></script><script src="youtube-api.js"></script><script src="playlist-import.js"></script><script src="app.js"></script><script src="playlist-ui.js"></script>
+</body></html>
